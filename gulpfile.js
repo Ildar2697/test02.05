@@ -11,7 +11,11 @@ const babel = require('gulp-babel');
 const notify = require('gulp-notify');
 const sourcemaps = require('gulp-sourcemaps');
 const del = require('del');
-const less = require('gulp-less')
+const less = require('gulp-less');
+const gulpIf = require('gulp-if');
+
+let isDev = false;
+let isProd = !isDev
 
 
 const clean = () => {
@@ -23,9 +27,11 @@ const resources = () => {
         .pipe(dest('dist'))
 }
 
+
+
 const styles = () => {
     return src('src/styles/main.less')
-        .pipe(sourcemaps.init())
+        .pipe(gulpIf(isDev, sourcemaps.init()))
         .pipe(less())
         // .pipe(concat('main.css'))
         .pipe(autoprefixer({
@@ -34,7 +40,7 @@ const styles = () => {
         .pipe(cleanCSS({
             level: 2,
         }))
-        .pipe(sourcemaps.write())
+        .pipe(gulpIf(isDev, sourcemaps.init()))
         .pipe(dest('dist'))
         .pipe(browserSync.stream())
 }
@@ -102,6 +108,7 @@ watch('src/images/svg/**/*.svg', svgSprites)
 watch('src/js/**/*.js', scripts)
 watch('src/resources/**', resources)
 watch('src/fonts/**/*', fonts)
+watch('src/images/**/*', images)
 
 exports.fonts = fonts
 exports.styles = styles

@@ -21,6 +21,7 @@
     "gulp-cli": "^2.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-htmlmin": "^5.0.1",
+    "gulp-if": "^3.0.0",
     "gulp-image": "^6.2.1",
     "gulp-less": "^4.0.1",
     "gulp-notify": "^4.0.0",
