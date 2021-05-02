@@ -90,14 +90,21 @@ const images = () => {
     .pipe(image())
     .pipe(dest('dist/images'))
 }
+const fonts = () => {
+    return src('src/fonts/**/*')
+        .pipe(dest('dist/fonts'))
+}
+
+
 watch('src/**/*.html', htmlMinify)
 watch('src/styles/**/*.less', styles)
 watch('src/images/svg/**/*.svg', svgSprites)
 watch('src/js/**/*.js', scripts)
 watch('src/resources/**', resources)
+watch('src/fonts/**/*', fonts)
 
-
+exports.fonts = fonts
 exports.styles = styles
 exports.scripts = scripts
 exports.htmlMinify = htmlMinify
-exports.default = series(clean, resources, htmlMinify, scripts, styles, images, svgSprites, watchFiles)
+exports.default = series(clean, resources, htmlMinify, scripts, styles, images, fonts, svgSprites, watchFiles)
